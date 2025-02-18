@@ -23,7 +23,7 @@ public class DefaultLoadGenerator implements StressTestGenerator {
 
     @Override
     public void setParallelThreads(long parallelThreads) {
-        parallelThreads = parallelThreads;
+        this.parallelThreads = parallelThreads;
     }
 
     @Override

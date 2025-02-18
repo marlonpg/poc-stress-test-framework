@@ -12,13 +12,13 @@ public class PocTestStressFrameworkMain {
     private static final Logger logger = LogManager.getLogger(PocTestStressFrameworkMain.class);
     public static void main(String[] args) {
         Workload workload = () -> {
-            logger.info("Calling a API or any other thing...");
+            logger.info("Calling a API or any other thing..." + Thread.currentThread().getName());
         };
 
         TestScenario scenario = TestScenario.TestScenarioBuilder.aTestScenario()
                 .withWorkload(workload)
-                .withDurationInSeconds(111)
-                .withNumberOfUsers(1)
+                .withDurationInSeconds(10)
+                .withNumberOfUsers(2)
                 .build();
 
         StressTestGenerator loadGenerator = new DefaultLoadGenerator();
