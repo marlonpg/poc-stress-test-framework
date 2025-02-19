@@ -4,14 +4,14 @@ import com.gambasoftware.poc.stress.test.framework.interfaces.Workload;
 
 public class TestScenario {
     private Workload workload;
-    private long numberOfUsers;
+    private int numberOfUsers;
     private long durationInSeconds;
 
     public Workload getWorkload() {
         return workload;
     }
 
-    public long getNumberOfUsers() {
+    public int getNumberOfUsers() {
         return numberOfUsers;
     }
 
@@ -21,7 +21,7 @@ public class TestScenario {
 
     public static final class TestScenarioBuilder {
         private Workload workload;
-        private long numberOfUsers;
+        private int numberOfUsers;
         private long durationInSeconds;
 
         private TestScenarioBuilder() {
@@ -36,7 +36,7 @@ public class TestScenario {
             return this;
         }
 
-        public TestScenarioBuilder withNumberOfUsers(long numberOfUsers) {
+        public TestScenarioBuilder withNumberOfUsers(int numberOfUsers) {
             this.numberOfUsers = numberOfUsers;
             return this;
         }

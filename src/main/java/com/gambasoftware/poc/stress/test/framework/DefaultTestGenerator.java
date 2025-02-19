@@ -9,12 +9,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class DefaultLoadGenerator implements StressTestGenerator {
-    private final Logger logger = LoggerFactory.getLogger(DefaultLoadGenerator.class);
+public class DefaultTestGenerator implements StressTestGenerator {
+    private final Logger logger = LoggerFactory.getLogger(DefaultTestGenerator.class);
     private Workload workload;
     private ExecutorService executorService;
     private boolean isRunning = false;
-    private long parallelThreads;
+    private int parallelThreads;
 
     @Override
     public void setWorkload(Workload workload) {
@@ -22,7 +22,7 @@ public class DefaultLoadGenerator implements StressTestGenerator {
     }
 
     @Override
-    public void setParallelThreads(long parallelThreads) {
+    public void setParallelThreads(int parallelThreads) {
         this.parallelThreads = parallelThreads;
     }
 
@@ -33,7 +33,7 @@ public class DefaultLoadGenerator implements StressTestGenerator {
             throw new IllegalStateException("Workload must be set before starting the load generator.");
         }
         isRunning = true;
-        executorService = Executors.newCachedThreadPool();
+        executorService = Executors.newFixedThreadPool(parallelThreads);
 
 
         for (int i = 0; i < parallelThreads; i++) {
