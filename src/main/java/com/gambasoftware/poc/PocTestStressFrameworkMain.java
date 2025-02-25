@@ -17,7 +17,7 @@ public class PocTestStressFrameworkMain {
             logger.info("Example I'm calling a API..." + Thread.currentThread().getName());
         };
 
-        //2. Define the Test scenario which is basically the number of parallel users you want to simulate
+        //2. Define the com.gambasoftware.poc.Test scenario which is basically the number of parallel users you want to simulate
         TestScenario scenario = TestScenario.TestScenarioBuilder.aTestScenario()
                 .withWorkload(workload)
                 .withDurationInSeconds(10)

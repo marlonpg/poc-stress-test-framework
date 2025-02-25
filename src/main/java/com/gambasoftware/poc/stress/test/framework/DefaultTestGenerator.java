@@ -28,7 +28,7 @@ public class DefaultTestGenerator implements StressTestGenerator {
 
     @Override
     public void start() {
-        logger.info("Test Start");
+        logger.info("com.gambasoftware.poc.Test Start");
         if (workload == null) {
             throw new IllegalStateException("Workload must be set before starting the load generator.");
         }
