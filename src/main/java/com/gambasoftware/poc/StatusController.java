@@ -9,7 +9,7 @@ import java.util.Map;
 @RestController
 public class StatusController {
 
-    @Value("${NODE_ROLE}")
+    @Value("${app.mode}")
     private String nodeRole;
 
     @GetMapping("/node-status")
