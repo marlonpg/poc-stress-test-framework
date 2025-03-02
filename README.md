@@ -1,9 +1,9 @@
 # poc-stress-test-framework
 
 ## start application 
-`./mvnw spring-boot:run -Dspring.profiles.active=master`
+`./mvnw spring-boot:run -Dspring-boot.run.profiles=master`
 ## or like this for worker
-`./mvnw spring-boot:run -Dspring.profiles.active=worker`
+`./mvnw spring-boot:run -Dspring-boot.run.profiles=worker`
 
 
 ## goals 
