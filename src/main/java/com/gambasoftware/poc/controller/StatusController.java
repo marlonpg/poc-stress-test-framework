@@ -1,5 +1,6 @@
 package com.gambasoftware.poc.controller;
 
+import com.gambasoftware.poc.TestWorkload;
 import com.gambasoftware.poc.service.MasterService;
 import com.gambasoftware.poc.service.WorkerWebSocketClient;
 import org.slf4j.Logger;
@@ -34,8 +35,10 @@ public class StatusController {
             workerWebSocketClient.sendMessageToMaster(message);
         } else {
             LOGGER.info("master sending to worker");
-            masterService.sendMessage(message);
+            TestWorkload workload = new TestWorkload();
+            masterService.sendMessage(workload);
+            LOGGER.info("master sending to worker finished");
         }
-        return "Message sent to workers: " + message;
+        return "Completed";
     }
 }

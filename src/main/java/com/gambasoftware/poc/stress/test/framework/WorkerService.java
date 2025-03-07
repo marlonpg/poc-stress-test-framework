@@ -1,23 +1,17 @@
-package com.gambasoftware.poc;
+package com.gambasoftware.poc.stress.test.framework;
 
-import com.gambasoftware.poc.stress.test.framework.DefaultTestGenerator;
-import com.gambasoftware.poc.stress.test.framework.TestRunner;
-import com.gambasoftware.poc.stress.test.framework.TestScenario;
+import com.gambasoftware.poc.TestWorkload;
 import com.gambasoftware.poc.stress.test.framework.interfaces.StressTestGenerator;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.gambasoftware.poc.stress.test.framework.interfaces.Workload;
 
-public class PocTestStressFrameworkMain {
-    private static final Logger logger = LogManager.getLogger(PocTestStressFrameworkMain.class);
-    public static void main(String[] args) {
-
-        //1. Define the workload which is basically whatever you want to stress test.
-        TestWorkload workload = new TestWorkload();
-
+public class WorkerService {
+    public void start(TestWorkload workload){
         //2. Define the com.gambasoftware.poc.Test scenario which is basically the number of parallel users you want to simulate
         TestScenario scenario = TestScenario.TestScenarioBuilder.aTestScenario()
                 .withWorkload(workload)
+                //TODO get this data from workflow or change the model to have more info
                 .withDurationInSeconds(10)
+                //TODO get this data from workflow or change the model to have more info
                 .withNumberOfUsers(2)
                 .build();
 

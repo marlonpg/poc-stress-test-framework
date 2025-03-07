@@ -1,6 +1,12 @@
 package com.gambasoftware.poc.service;
 
+import com.gambasoftware.poc.TestWorkload;
 import com.gambasoftware.poc.model.Message;
+import com.gambasoftware.poc.stress.test.framework.WorkerService;
+import com.gambasoftware.poc.stress.test.framework.interfaces.Workload;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompCommand;
@@ -19,10 +25,11 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
 
-@Service
-@ConditionalOnProperty(name = "app.mode", havingValue = "worker")
 public class WorkerWebSocketClient {
+    private static final Logger LOGGER = LoggerFactory.getLogger(WorkerWebSocketClient.class);
 
+    @Value("${masterUrl}")
+    private String masterUrl;
     private StompSession stompSession;
 
     public void connectToMaster() {
@@ -34,45 +41,47 @@ public class WorkerWebSocketClient {
         //Configure the message converter
         stompClient.setMessageConverter(new MappingJackson2MessageConverter());
 
-        //Open connection with  master
+        //Open connection with master
         String masterWebSocketUrl = "ws://localhost:8080/ws";
         stompClient.connectAsync(masterWebSocketUrl, new StompSessionHandlerAdapter() {
             @Override
             public void afterConnected(StompSession session, StompHeaders connectedHeaders) {
-                System.out.println("Worker connected to master WebSocket");
+                LOGGER.info("Worker connected to master={}", masterUrl);
                 stompSession = session;
 
                 session.subscribe("/topic/workload", new StompFrameHandler() {
                     @Override
                     public Type getPayloadType(StompHeaders headers) {
-                        return Message.class;
+                        return TestWorkload.class;
                     }
 
                     @Override
                     public void handleFrame(StompHeaders headers, Object payload) {
-                        Message message = (Message) payload;
-                        System.out.println("Worker received message: " + message.getContent());
+                        TestWorkload workload = (TestWorkload) payload;
+                        LOGGER.info("Worker received message={}", workload.toString());
+                        WorkerService workerService = new WorkerService();
+                        workerService.start(workload);
                     }
                 });
             }
 
             @Override
             public void handleException(StompSession session, StompCommand command, StompHeaders headers, byte[] payload, Throwable exception) {
-                System.err.println("WebSocket error: " + exception.getMessage());
+                LOGGER.error("WebSocket error", exception);
             }
 
             @Override
             public void handleTransportError(StompSession session, Throwable exception) {
-                System.err.println("Transport error: " + exception.getMessage());
+                LOGGER.error("Transport error", exception);
             }
         });
     }
     public void sendMessageToMaster(String message) {
         if (stompSession != null && stompSession.isConnected()) {
             stompSession.send("/app/result", new Message(message));
-            System.out.println("Worker sent message to master: " + message);
+            LOGGER.info("Worker sent message to master message={}", message);
         } else {
-            System.err.println("Worker is not connected to the master.");
+            LOGGER.info("Worker is not connected to the master.");
         }
     }
 }
