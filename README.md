@@ -1,5 +1,8 @@
 # poc-stress-test-framework
 
+## build
+`./mvnw clean install`
+
 ## start application 
 `./mvnw spring-boot:run -Dspring-boot.run.profiles=master`
 ## or like this for worker
