@@ -1,10 +1,11 @@
 package com.gambasoftware.poc.stress.test.framework;
 
+import com.gambasoftware.poc.TestWorkload;
 import com.gambasoftware.poc.stress.test.framework.interfaces.StressTestGenerator;
 import com.gambasoftware.poc.stress.test.framework.interfaces.Workload;
 
 public class WorkerService {
-    public void start(Workload workload){
+    public void start(TestWorkload workload){
         //2. Define the com.gambasoftware.poc.Test scenario which is basically the number of parallel users you want to simulate
         TestScenario scenario = TestScenario.TestScenarioBuilder.aTestScenario()
                 .withWorkload(workload)

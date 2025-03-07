@@ -25,8 +25,6 @@ import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
 
-@Service
-@ConditionalOnProperty(name = "app.mode", havingValue = "worker")
 public class WorkerWebSocketClient {
     private static final Logger LOGGER = LoggerFactory.getLogger(WorkerWebSocketClient.class);
 
@@ -59,7 +57,7 @@ public class WorkerWebSocketClient {
 
                     @Override
                     public void handleFrame(StompHeaders headers, Object payload) {
-                        Workload workload = (Workload) payload;
+                        TestWorkload workload = (TestWorkload) payload;
                         LOGGER.info("Worker received message={}", workload.toString());
                         WorkerService workerService = new WorkerService();
                         workerService.start(workload);
