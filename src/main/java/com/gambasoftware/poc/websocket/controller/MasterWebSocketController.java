@@ -1,6 +1,6 @@
-package com.gambasoftware.poc.controller;
+package com.gambasoftware.poc.websocket.controller;
 
-import com.gambasoftware.poc.model.Message;
+import com.gambasoftware.poc.websocket.model.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.messaging.handler.annotation.MessageMapping;

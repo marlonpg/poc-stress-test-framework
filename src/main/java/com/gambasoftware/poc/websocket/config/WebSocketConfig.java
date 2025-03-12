@@ -1,6 +1,6 @@
-package com.gambasoftware.poc.config;
+package com.gambasoftware.poc.websocket.config;
 
-import com.gambasoftware.poc.service.WorkerWebSocketClient;
+import com.gambasoftware.poc.websocket.service.WorkerWebSocketClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

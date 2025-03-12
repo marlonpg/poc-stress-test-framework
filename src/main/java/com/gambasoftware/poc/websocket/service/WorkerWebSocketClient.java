@@ -1,20 +1,17 @@
-package com.gambasoftware.poc.service;
+package com.gambasoftware.poc.websocket.service;
 
 import com.gambasoftware.poc.TestWorkload;
-import com.gambasoftware.poc.model.Message;
+import com.gambasoftware.poc.websocket.model.Message;
 import com.gambasoftware.poc.stress.test.framework.WorkerService;
-import com.gambasoftware.poc.stress.test.framework.interfaces.Workload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
-import org.springframework.stereotype.Service;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 import org.springframework.web.socket.sockjs.client.SockJsClient;

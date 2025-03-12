@@ -1,4 +1,4 @@
-package com.gambasoftware.poc.model;
+package com.gambasoftware.poc.websocket.model;
 
 public class Message {
     private String content;

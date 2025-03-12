@@ -1,8 +1,8 @@
-package com.gambasoftware.poc.controller;
+package com.gambasoftware.poc.websocket.controller;
 
 import com.gambasoftware.poc.TestWorkload;
-import com.gambasoftware.poc.service.MasterService;
-import com.gambasoftware.poc.service.WorkerWebSocketClient;
+import com.gambasoftware.poc.websocket.service.MasterService;
+import com.gambasoftware.poc.websocket.service.WorkerWebSocketClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
