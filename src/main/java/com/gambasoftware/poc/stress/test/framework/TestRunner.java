@@ -5,7 +5,6 @@ import com.gambasoftware.poc.stress.test.framework.interfaces.StressTestGenerato
 
 public class TestRunner {
     private StressTestGenerator stressTestGenerator;
-    private Metrics metrics;
 
     public void run(TestScenario scenario) {
         //todo adding logs and observability
@@ -42,14 +41,8 @@ public class TestRunner {
             return this;
         }
 
-        public TestRunnerBuilder withMetrics(Metrics metrics) {
-            this.metrics = metrics;
-            return this;
-        }
-
         public TestRunner build() {
             TestRunner testRunner = new TestRunner();
-            testRunner.metrics = this.metrics;
             testRunner.stressTestGenerator = this.stressTestGenerator;
             return testRunner;
         }

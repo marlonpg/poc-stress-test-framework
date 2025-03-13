@@ -1,6 +1,6 @@
 package com.gambasoftware.poc.websocket.service;
 
-import com.gambasoftware.poc.TestWorkload;
+import com.gambasoftware.poc.stress.test.framework.DefaultWorkload;
 import com.gambasoftware.poc.websocket.model.Message;
 import com.gambasoftware.poc.stress.test.framework.WorkerService;
 import org.slf4j.Logger;
@@ -21,9 +21,10 @@ import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
-public class WorkerWebSocketClient {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WorkerWebSocketClient.class);
+public class WSWorkerClient {
+    private static final Logger LOGGER = LoggerFactory.getLogger(WSWorkerClient.class);
 
     @Value("${masterUrl}")
     private String masterUrl;
@@ -49,15 +50,18 @@ public class WorkerWebSocketClient {
                 session.subscribe("/topic/workload", new StompFrameHandler() {
                     @Override
                     public Type getPayloadType(StompHeaders headers) {
-                        return TestWorkload.class;
+                        return DefaultWorkload.class;
                     }
 
                     @Override
                     public void handleFrame(StompHeaders headers, Object payload) {
-                        TestWorkload workload = (TestWorkload) payload;
+                        DefaultWorkload workload = (DefaultWorkload) payload;
                         LOGGER.info("Worker received message={}", workload.toString());
                         WorkerService workerService = new WorkerService();
-                        workerService.start(workload);
+                        Map<String, Map<String, String>> metrics = workerService.start(workload);
+
+                        sendMessageToMaster(metrics);
+
                     }
                 });
             }
@@ -73,7 +77,7 @@ public class WorkerWebSocketClient {
             }
         });
     }
-    public void sendMessageToMaster(String message) {
+    public void sendMessageToMaster(Map<String, Map<String, String>> message) {
         if (stompSession != null && stompSession.isConnected()) {
             stompSession.send("/app/result", new Message(message));
             LOGGER.info("Worker sent message to master message={}", message);

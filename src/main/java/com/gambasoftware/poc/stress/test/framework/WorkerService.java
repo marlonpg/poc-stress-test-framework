@@ -1,16 +1,16 @@
 package com.gambasoftware.poc.stress.test.framework;
 
-import com.gambasoftware.poc.TestWorkload;
 import com.gambasoftware.poc.stress.test.framework.interfaces.StressTestGenerator;
-import com.gambasoftware.poc.stress.test.framework.interfaces.Workload;
+
+import java.util.Map;
 
 public class WorkerService {
-    public void start(TestWorkload workload){
+    public Map<String, Map<String, String>> start(DefaultWorkload workload){
         //2. Define the com.gambasoftware.poc.Test scenario which is basically the number of parallel users you want to simulate
         TestScenario scenario = TestScenario.TestScenarioBuilder.aTestScenario()
                 .withWorkload(workload)
                 //TODO get this data from workflow or change the model to have more info
-                .withDurationInSeconds(10)
+                .withDurationInSeconds(3)
                 //TODO get this data from workflow or change the model to have more info
                 .withNumberOfUsers(2)
                 .build();
@@ -20,5 +20,7 @@ public class WorkerService {
 
         TestRunner runner = TestRunner.TestRunnerBuilder.aTestRunner(loadGenerator).build();
         runner.run(scenario);
+
+        return loadGenerator.getMetrics();
     }
 }

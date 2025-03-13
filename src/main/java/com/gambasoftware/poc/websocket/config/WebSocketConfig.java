@@ -1,6 +1,6 @@
 package com.gambasoftware.poc.websocket.config;
 
-import com.gambasoftware.poc.websocket.service.WorkerWebSocketClient;
+import com.gambasoftware.poc.websocket.service.WSWorkerClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,11 +33,11 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Bean
     @ConditionalOnProperty(name = "app.mode", havingValue = "worker")
-    public WorkerWebSocketClient workerWebSocketClient() {
-        WorkerWebSocketClient workerWebSocketClient = new WorkerWebSocketClient();
-        workerWebSocketClient.connectToMaster();
+    public WSWorkerClient workerWebSocketClient() {
+        WSWorkerClient WSWorkerClient = new WSWorkerClient();
+        WSWorkerClient.connectToMaster();
 
         LOGGER.info("Node={}, connected to master", mode);
-        return workerWebSocketClient;
+        return WSWorkerClient;
     }
 }
